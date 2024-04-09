@@ -30,6 +30,23 @@ public class BookController {
     }
 
 
+<<<<<<< HEAD
+=======
+        @GetMapping("/genre/{id}")
+        public Object getBookByGenre(@PathVariable long id){
+        return  bookService.getBookByGenre(id);
+
+}
+    @GetMapping("/genre/name/{name}")
+    public Object getBookByName(@PathVariable("name") String name){
+        return bookService.getBookByName(name);
+    }
+    @GetMapping("author")
+    public Object getAuthor(@RequestParam long bookId){
+        return bookService.getAuthor(bookId);
+    }
+
+>>>>>>> a85db94 (Initial commit)
 
 
 }

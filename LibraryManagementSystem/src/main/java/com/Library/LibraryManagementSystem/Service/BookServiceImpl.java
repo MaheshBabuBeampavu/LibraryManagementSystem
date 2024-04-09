@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService{
         books1.setQuantity(books.getQuantity());
         books1.setPublishers(publishers1);
         books1.setGenres(genres1);
-        books1.setId(UUID.randomUUID());
+     //   books1.setId(UUID.randomUUID());
        // books1.setBookAuthors(bookAuthors1);
 
         Books books2= booksRepository.save(books1);
@@ -102,5 +102,25 @@ public Object getBooks() {
     @Override
     public Optional<Books> getBookById(Long id) {
         return booksRepository.findById(id);
+    }
+
+    @Override
+    public Object getBookByGenre(long id) {
+        Genres genres=genreRepository.findById(id).get();
+        return genres.getBooks();
+    }
+
+    @Override
+    public Object getBookByName(String name) {
+        Genres genres=genreRepository.findByGenreName(name);
+        return  genres.getBooks();
+    }
+
+    @Override
+    public Object getAuthor(long bookId) {
+        Books books=booksRepository.findById(bookId).get();
+       BookAuthors bookAuthors= books.getBookAuthors();
+       return  bookAuthors.getAuthors();
+
     }
 }

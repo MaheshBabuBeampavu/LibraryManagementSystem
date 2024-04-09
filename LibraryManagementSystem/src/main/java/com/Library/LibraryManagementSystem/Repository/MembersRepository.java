@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 
 public interface MembersRepository extends JpaRepository<Members,Long> {
 
+//    Object findByName(String );
 }

@@ -4,4 +4,8 @@ import com.Library.LibraryManagementSystem.Entity.Members;
 
 public interface MemberService {
     Object setMembers(Members members);
+
+    Object getMemberById(long id);
+
+    Object getMembers();
 }

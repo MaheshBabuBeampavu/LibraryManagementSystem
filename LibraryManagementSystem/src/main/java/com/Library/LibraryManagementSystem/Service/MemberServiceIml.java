@@ -19,4 +19,14 @@ public class MemberServiceIml implements MemberService{
        members1.setPhoneNumber(members.getPhoneNumber());
      return  membersRepository.save(members1);
     }
+
+    @Override
+    public Object getMemberById(long id) {
+        return membersRepository.findById(id);
+    }
+
+    @Override
+    public Object getMembers() {
+        return membersRepository.findAll();
+    }
 }

@@ -39,7 +39,7 @@ public class TransactionServiceImp implements TransactionService{
            Optional<Books> books=booksRepository.findById(bookId);
            if(books.isPresent()) {
                Books books1=books.get();
-               books1.setQuantity(books1.getQuantity()-1);
+               books1.setQuantity(books1.getQuantity()+1);
                Books books2 = booksRepository.save(books1);
                transactions1.setBooks(books2);
 
@@ -47,25 +47,47 @@ public class TransactionServiceImp implements TransactionService{
                transactions1.setMembers(membersRepository.findById(memberId).get());
 
 
-               //transactions1.se
-               //transactions1.setMembers();
                transactionRepository.save(transactions1);
            }
         }
         else{
-//            Transactions transactions2=new Transactions();
-//            transactions2.setTransactionType(transactions.getType());
-//            transactions2.setDueDate(transactions.getDueDate());
-//
-//
-//
-//            Books books=transactions.getBooks();
-//            books.setQuantity(books.getQuantity()+1);
-//            Books books1= booksRepository.save(books);
-//            transactions2.setBooks(books1);
-//            transactions2.setMembers(transactions2.getMembers());
-//            transactionRepository.save(transactions2);
+            Transactions transactions1=new Transactions();
+            transactions1.setTransactionType(transactions.getType());
+            Date date=new Date();
+            Date date1=new Date(2024,10,2);
+            transactions1.setDueDate(date.toString());
+            transactions1.setReturnDate(date1.toString());
+
+
+
+            long bookId=transactions.getBookId();
+            Optional<Books> books=booksRepository.findById(bookId);
+            if(books.isPresent()) {
+                Books books1 = books.get();
+                books1.setQuantity(books1.getQuantity() - 1);
+                Books books2 = booksRepository.save(books1);
+                transactions1.setBooks(books2);
+
+                long memberId = transactions.getMemberId();
+                transactions1.setMembers(membersRepository.findById(memberId).get());
+
+
+                transactionRepository.save(transactions1);
+            }
+
         }
         return "success";
     }
+
+    @Override
+    public Object getTransactionById(long id) {
+        return transactionRepository.findById(id);
+    }
+
+    @Override
+    public Object getTransactions() {
+        return transactionRepository.findAll();
+    }
+
+
 }

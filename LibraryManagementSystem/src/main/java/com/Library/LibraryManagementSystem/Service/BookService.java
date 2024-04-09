@@ -11,4 +11,10 @@ public interface BookService {
    public Object getBooks();
 
   public Optional<Books> getBookById(Long id);
+
+    Object getBookByGenre(long id);
+
+    Object getBookByName(String name);
+
+    Object getAuthor(long bookId);
 }

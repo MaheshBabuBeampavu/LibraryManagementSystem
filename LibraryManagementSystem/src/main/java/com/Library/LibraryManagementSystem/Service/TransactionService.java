@@ -5,4 +5,8 @@ import com.Library.LibraryManagementSystem.Entity.Transactions;
 
 public interface TransactionService {
     Object transaction(NewTransaction transactions5);
+
+    Object getTransactionById(long id);
+
+    Object getTransactions();
 }
