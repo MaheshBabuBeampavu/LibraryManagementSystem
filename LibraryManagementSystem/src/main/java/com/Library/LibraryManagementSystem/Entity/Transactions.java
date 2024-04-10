@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Data
@@ -13,8 +14,14 @@ import lombok.NoArgsConstructor;
 
 public class Transactions {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long transactionId;
+    @GeneratedValue(generator = "UUID")
+
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "transaction_id", updatable = false, nullable = false)
+    String transactionId;
     String transactionType;
     String dueDate;
     String returnDate;

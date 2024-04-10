@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TransactionServiceImp implements TransactionService{
@@ -27,15 +29,26 @@ public class TransactionServiceImp implements TransactionService{
 
         if(transactions.getType().equals("return")){
             Transactions transactions1=new Transactions();
-            transactions1.setTransactionType(transactions.getType());
-            Date date=new Date();
-            Date date1=new Date(2024,4,2);
-            transactions1.setDueDate(date1.toString());
-            transactions1.setReturnDate(date.toString());
+
+//                Optional<Transactions> ttt = transactionRepository.findByMembers(transactions.getMemberId());
+//                if (ttt.isPresent()) {
+//                    return "You have already borrowed the same book.";
+//                }
+
+                transactions1.setTransactionType(transactions.getType());
+            Calendar calendar=Calendar.getInstance();
+            Date ret=calendar.getTime();
+
+//            calendar.setTime(new Date());
+//            calendar.add(Calendar.WEEK_OF_YEAR,3);
+//            Date due=calendar.getTime();
+          String due= transactions1.getDueDate();
+            transactions1.setDueDate(due);
+            transactions1.setReturnDate(ret.toString());
 
 
 
-           long bookId=transactions.getBookId();
+           String bookId=transactions.getBookId();
            Optional<Books> books=booksRepository.findById(bookId);
            if(books.isPresent()) {
                Books books1=books.get();
@@ -43,7 +56,7 @@ public class TransactionServiceImp implements TransactionService{
                Books books2 = booksRepository.save(books1);
                transactions1.setBooks(books2);
 
-               long memberId=transactions.getMemberId();
+               String memberId=transactions.getMemberId();
                transactions1.setMembers(membersRepository.findById(memberId).get());
 
 
@@ -52,15 +65,25 @@ public class TransactionServiceImp implements TransactionService{
         }
         else{
             Transactions transactions1=new Transactions();
+//            Optional<Transactions> ttt =transactionRepository.findByMemberId(transactions.getMemberId());
+//            if (ttt.isPresent()) {
+//                return "You have already borrowed the same book.";
+//            }
+
             transactions1.setTransactionType(transactions.getType());
-            Date date=new Date();
-            Date date1=new Date(2024,10,2);
-            transactions1.setDueDate(date.toString());
-            transactions1.setReturnDate(date1.toString());
+            Calendar calendar=Calendar.getInstance();
+            Date ret=calendar.getTime();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.WEEK_OF_YEAR,6);
+            Date due=calendar.getTime();
+
+
+            transactions1.setDueDate(ret.toString());
+          //  transactions1.setReturnDate(due.toString());
 
 
 
-            long bookId=transactions.getBookId();
+            String bookId=transactions.getBookId();
             Optional<Books> books=booksRepository.findById(bookId);
             if(books.isPresent()) {
                 Books books1 = books.get();
@@ -68,7 +91,7 @@ public class TransactionServiceImp implements TransactionService{
                 Books books2 = booksRepository.save(books1);
                 transactions1.setBooks(books2);
 
-                long memberId = transactions.getMemberId();
+                String memberId = transactions.getMemberId();
                 transactions1.setMembers(membersRepository.findById(memberId).get());
 
 
@@ -80,7 +103,7 @@ public class TransactionServiceImp implements TransactionService{
     }
 
     @Override
-    public Object getTransactionById(long id) {
+    public Object getTransactionById(String id) {
         return transactionRepository.findById(id);
     }
 

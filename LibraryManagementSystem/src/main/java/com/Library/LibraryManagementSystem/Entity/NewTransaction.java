@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 
 public class NewTransaction {
- Long bookId;
+ String bookId;
  String type;
-Long memberId;
+String memberId;
 
 }

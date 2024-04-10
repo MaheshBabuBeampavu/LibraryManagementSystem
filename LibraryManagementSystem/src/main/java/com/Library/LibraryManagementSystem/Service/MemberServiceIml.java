@@ -5,6 +5,8 @@ import com.Library.LibraryManagementSystem.Repository.MembersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 
 public class MemberServiceIml implements MemberService{
@@ -20,8 +22,10 @@ public class MemberServiceIml implements MemberService{
      return  membersRepository.save(members1);
     }
 
+
+
     @Override
-    public Object getMemberById(long id) {
+    public Object getMemberById(String id) {
         return membersRepository.findById(id);
     }
 

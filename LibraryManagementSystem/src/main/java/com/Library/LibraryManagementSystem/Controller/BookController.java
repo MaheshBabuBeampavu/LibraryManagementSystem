@@ -7,6 +7,8 @@ import com.Library.LibraryManagementSystem.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/book")
 
@@ -16,8 +18,8 @@ public class BookController {
     BookService bookService;
     @PostMapping("/create")
     public Object setBook(@RequestBody Books books){
-        bookService.setBook(books);
-        return "Success";
+       return bookService.setBook(books);
+
 
     }
     @GetMapping("/get")
@@ -25,15 +27,14 @@ public class BookController {
         return bookService.getBooks();
     }
     @GetMapping("/get/{id}")
-    public Object getBookById(@PathVariable Long id){
+    public Object getBookById(@PathVariable String id){
         return bookService.getBookById(id);
     }
 
 
-<<<<<<< HEAD
-=======
+
         @GetMapping("/genre/{id}")
-        public Object getBookByGenre(@PathVariable long id){
+        public Object getBookByGenre(@PathVariable String id){
         return  bookService.getBookByGenre(id);
 
 }
@@ -41,12 +42,12 @@ public class BookController {
     public Object getBookByName(@PathVariable("name") String name){
         return bookService.getBookByName(name);
     }
-    @GetMapping("author")
-    public Object getAuthor(@RequestParam long bookId){
-        return bookService.getAuthor(bookId);
-    }
+//    @GetMapping("author")
+//    public Object getAuthor(@RequestParam long bookId){
+//        return bookService.getAuthor(bookId);
+//    }
 
->>>>>>> a85db94 (Initial commit)
+
 
 
 }

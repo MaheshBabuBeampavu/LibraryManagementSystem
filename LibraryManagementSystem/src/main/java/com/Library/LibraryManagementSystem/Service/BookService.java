@@ -3,18 +3,19 @@ package com.Library.LibraryManagementSystem.Service;
 import com.Library.LibraryManagementSystem.Entity.Books;
 
 import java.util.Optional;
+import java.util.UUID;
 
 
 public interface BookService {
-    void setBook(Books books);
+    Object setBook(Books books);
 
    public Object getBooks();
 
-  public Optional<Books> getBookById(Long id);
+  public Object getBookById(String id);
 
-    Object getBookByGenre(long id);
+    Object getBookByGenre(String id);
 
     Object getBookByName(String name);
 
-    Object getAuthor(long bookId);
+//    Object getAuthor(long bookId);
 }

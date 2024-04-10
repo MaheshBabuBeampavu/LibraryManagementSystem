@@ -8,7 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,7 +27,7 @@ public class Books {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(name = "book_id", updatable = false, nullable = false)
-    private UUID id;
+    private String id;
     String title;
     String author;
     String isbn;
@@ -41,12 +43,20 @@ public class Books {
 //    @JsonIgnore
     private Genres genres;
 
-    @OneToOne(mappedBy = "books")
-//    @JsonIgnore
-    private BookAuthors bookAuthors;
+//    @OneToOne(mappedBy = "books")
+////    @JsonIgnore
+//    private BookAuthors bookAuthors;
 
 
     @OneToMany(mappedBy = "books")
 //    @JsonIgnore
     private List<Transactions> transactions;
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "book_author",
+        joinColumns = { @JoinColumn(name = "book_id") },
+        inverseJoinColumns = { @JoinColumn(name = "author_id") }
+    )
+    private Set<Authors> authors = new HashSet<>();
+
 }

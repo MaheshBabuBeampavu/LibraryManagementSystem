@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
 
@@ -16,9 +17,14 @@ import java.util.List;
 
 public class Publishers {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-            @Column(name = "publisher_id")
-    Long publisherId;
+    @GeneratedValue(generator = "UUID")
+
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "publisher_id", updatable = false, nullable = false)
+    String publisherId;
     String publisherName;
     @OneToMany(mappedBy = "publishers")
     @JsonIgnore

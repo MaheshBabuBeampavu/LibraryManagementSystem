@@ -6,6 +6,8 @@ import com.Library.LibraryManagementSystem.Service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/transaction")
 
@@ -17,7 +19,7 @@ public class TransactionController {
         return transactionService.transaction(transaction5);
     }
     @GetMapping("/{id}")
-    public Object getTransactionById(@PathVariable long id){
+    public Object getTransactionById(@PathVariable String id){
         return transactionService.getTransactionById(id);
     }
     @GetMapping("/get")

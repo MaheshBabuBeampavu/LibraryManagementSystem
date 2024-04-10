@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.print.DocFlavor;
 import java.util.List;
@@ -17,9 +18,14 @@ import java.util.List;
 
 public class Members {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-            @Column(name = "member_id")
-    Long memberId;
+    @GeneratedValue(generator = "UUID")
+
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "member_id", updatable = false, nullable = false)
+    String memberId;
     String name;
     String address;
     Long phoneNumber;

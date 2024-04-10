@@ -5,10 +5,7 @@ import com.Library.LibraryManagementSystem.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BookServiceImpl implements BookService{
@@ -20,11 +17,11 @@ public class BookServiceImpl implements BookService{
     PublisherRepository publisherRepository;
     @Autowired
     GenreRepository genreRepository;
-    @Autowired
-    BookAuthorRepository bookAuthorRepository;
+//    @Autowired
+//    BookAuthorRepository bookAuthorRepository;
 
     @Override
-    public void setBook(Books books) {
+    public Object setBook(Books books) {
       //  booksRepository.save(books);
         Genres genres=new Genres();
         genres.setGenreName(books.getGenres().getGenreName());
@@ -34,6 +31,8 @@ public class BookServiceImpl implements BookService{
         Authors authors=new Authors();
         authors.setAuthorName(books.getAuthor());
       Authors authors1 = authorRepository.save(authors);
+      Set<Authors> authorsSet=new HashSet<>();
+      authorsSet.add(authors1);
 
 
         Publishers publishers=new Publishers();
@@ -48,15 +47,16 @@ public class BookServiceImpl implements BookService{
         books1.setQuantity(books.getQuantity());
         books1.setPublishers(publishers1);
         books1.setGenres(genres1);
+        books1.setAuthors(authorsSet);
      //   books1.setId(UUID.randomUUID());
        // books1.setBookAuthors(bookAuthors1);
 
         Books books2= booksRepository.save(books1);
 
-        BookAuthors bookAuthors=new BookAuthors();
-        bookAuthors.setAuthors(authors1);
-        bookAuthors.setBooks(books2);
-        bookAuthorRepository.save(bookAuthors);
+//        BookAuthors bookAuthors=new BookAuthors();
+//        bookAuthors.setAuthors(authors1);
+//        bookAuthors.setBooks(books2);
+//        bookAuthorRepository.save(bookAuthors);
 
 
 
@@ -64,7 +64,7 @@ public class BookServiceImpl implements BookService{
 
 
 
-
+return  books2;
     }
 
 
@@ -75,7 +75,7 @@ public Object getBooks() {
 
     for (Books book : booksList) {
         Books modifiedBook = new Books();
-      //  modifiedBook.setBookId(book.getBookId());
+       modifiedBook.setId(book.getId());
         modifiedBook.setTitle(book.getTitle());
         modifiedBook.setAuthor(book.getAuthor());
         modifiedBook.setIsbn(book.getIsbn());
@@ -100,12 +100,12 @@ public Object getBooks() {
 }
 
     @Override
-    public Optional<Books> getBookById(Long id) {
+    public Object getBookById(String id) {
         return booksRepository.findById(id);
     }
 
     @Override
-    public Object getBookByGenre(long id) {
+    public Object getBookByGenre(String id) {
         Genres genres=genreRepository.findById(id).get();
         return genres.getBooks();
     }
@@ -116,11 +116,11 @@ public Object getBooks() {
         return  genres.getBooks();
     }
 
-    @Override
-    public Object getAuthor(long bookId) {
-        Books books=booksRepository.findById(bookId).get();
-       BookAuthors bookAuthors= books.getBookAuthors();
-       return  bookAuthors.getAuthors();
-
-    }
+//    @Override
+//    public Object getAuthor(l bookId) {
+//        Books books=booksRepository.findById(bookId).get();
+//       BookAuthors bookAuthors= books.getBookAuthors();
+//       return  bookAuthors.getAuthors();
+//
+//    }
 }

@@ -5,8 +5,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -14,10 +17,18 @@ import java.util.List;
 @NoArgsConstructor
 public class Authors {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long authorId;
-    String authorName;
-    @OneToMany(mappedBy = "authors")
+    @GeneratedValue(generator = "UUID")
 
-    private List<BookAuthors> bookAuthors;
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "author_id", updatable = false, nullable = false)
+    String authorId;
+    String authorName;
+//    @OneToMany(mappedBy = "authors")
+//
+//    private List<BookAuthors> bookAuthors;
+@ManyToMany(mappedBy = "authors")
+private Set<Books> books = new HashSet<>();
 }
